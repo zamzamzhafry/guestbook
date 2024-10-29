@@ -16,7 +16,7 @@ export default function Home() {
   };
 
   const handleChangeGender = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
+    const value = event.target.value || "male";
     setInputGenderValue(value);
   };
 
@@ -34,7 +34,7 @@ export default function Home() {
         />
         </div>
         <select name="" id="" value={inputGenderValue} onChange={handleChangeGender} className="text-foreground">
-          <option value="male" defaultChecked>Bapak/Sdr</option>
+          <option value="male" >Bapak/Sdr</option>
           <option value="female">Ibu/Nona</option>
         </select>
       </main>
