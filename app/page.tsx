@@ -8,6 +8,8 @@ export default function Home() {
   const [inputValue, setInputValue] = useState("");
   const [inputGenderValue, setInputGenderValue] = useState("");
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://localhost:3000"; // Fallback for local development
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
@@ -37,11 +39,9 @@ export default function Home() {
         </select>
       </main>
       
-<Link href={`/welcome?value=${encodeURIComponent(inputValue)}&gender=${encodeURIComponent(inputGenderValue)}`}>
-  <div>
-    <QRCode value={inputValue ? `/welcome?value=${encodeURIComponent(inputValue)}&gender=${encodeURIComponent(inputGenderValue)}` : ""} />
-  </div>
-</Link>
+ <QRCode
+          value={inputValue ? `${baseUrl}/welcome?value=${encodeURIComponent(inputValue)}&gender=${encodeURIComponent(inputGenderValue)}` : ""}
+        />
 
     </div>
   );
