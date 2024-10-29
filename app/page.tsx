@@ -1,7 +1,7 @@
 'use client'
 // import Image from "next/image";
 import QRCode from "react-qr-code";
-import Link from "next/link";
+// import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
