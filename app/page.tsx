@@ -3,12 +3,14 @@
 import QRCode from "react-qr-code";
 // import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState("");
   const [inputGenderValue, setInputGenderValue] = useState("");
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://localhost:3000"; // Fallback for local development
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"; // Fallback for local development
+  // const baseUrl = "https://localhost:3000"; // Fallback for local development
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -39,9 +41,12 @@ export default function Home() {
         </select>
       </main>
       
- <QRCode
+      <Link href={inputValue ? `${baseUrl}/welcome?value=${encodeURIComponent(inputValue)}&gender=${encodeURIComponent(inputGenderValue)}` : ""}>
+        <QRCode
           value={inputValue ? `${baseUrl}/welcome?value=${encodeURIComponent(inputValue)}&gender=${encodeURIComponent(inputGenderValue)}` : ""}
         />
+        </Link>
+<div className="bg-primary text-primary-foreground">Hello</div>
 
     </div>
   );
