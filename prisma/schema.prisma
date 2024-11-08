@@ -1,0 +1,21 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id    String @id @default(cuid()) @map("_id") // MongoDB requires @map("_id") on id fields
+  email String @unique
+  name  String
+  gender Boolean
+}
+
+model Post {
+  id      Int      @id @default(autoincrement())
+  title   String
+  content String?
+  createdAt DateTime @default(now())
+}

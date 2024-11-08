@@ -17,9 +17,9 @@ const WelcomeContent = () => {
 
     return (
         <div className="min-h-screen flex flex-col items-center justify-center p-8">
-            <h1 className="text-2xl font-bold mb-4 text-white">Welcome Page</h1>
-            <p className="text-lg text-white">
-                {genderValue} : <span className="font-mono">{value}</span>
+            <h1 className="text-5xl font-bold text-slate-800">Welcome Page</h1>
+            <p className="text-lg text-slate-500">
+                {genderValue} , <span className="font-mono">{value}</span>
             </p>
         </div>
     )
