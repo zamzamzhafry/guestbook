@@ -1,0 +1,61 @@
+📦 guestbook-invitational-app
+├── 📂 app
+│   ├── 📄 layout.tsx                // Main layout component
+│   ├── 📄 globals.css               // Global styles
+│   ├── 📄 page.tsx                  // Home Page (Introduction and links)
+│   │
+│   ├── 📂 dashboard                 // Guest Dashboard
+│   │   ├── 📄 page.tsx              // Guest Dashboard main page
+│   │   ├── 📂 components
+│   │   │   ├── 📄 AddGuestForm.tsx  // Form for manually adding a guest
+│   │   │   ├── 📄 GuestList.tsx     // Displays list of guests with edit/delete actions
+│   │   │   └── 📄 ImportGuests.tsx  // Component for importing guest list via XLS
+│   │
+│   ├── 📂 invitation                // Invitation Page
+│   │   ├── 📂 [guestId]
+│   │   │   ├── 📄 page.tsx          // Invitation details page for a specific guest
+│   │   │   ├── 📂 components
+│   │   │   │   ├── 📄 CopyButton.tsx // Button to copy invitation details
+│   │   │   │   └── 📄 MapLink.tsx   // Button linking to Google Maps
+│   │
+│   ├── 📂 attendance                // Attendance and QR Code Pages
+│   │   ├── 📂 qr-generator
+│   │   │   ├── 📄 page.tsx          // QR Code generator page
+│   │   │   └── 📂 components
+│   │   │       └── 📄 QRCodeGen.tsx // QR Code generator component
+│   │   ├── 📂 check-in
+│   │   │   ├── 📄 page.tsx          // Front Desk check-in page
+│   │   │   └── 📂 components
+│   │   │       └── 📄 ManualAddGuest.tsx // Manually add a guest at check-in
+│   │
+│   ├── 📂 guestbook                 // Real-time Guestbook Page
+│   │   ├── 📄 page.tsx              // Display confirmed guests and congratulatory messages
+│   │   ├── 📂 components
+│   │   │   ├── 📄 GuestList.tsx     // List of guests who checked in
+│   │   │   └── 📄 CongratsMessage.tsx // Real-time congratulatory message component
+│   │
+│   ├── 📂 admin                     // Admin Dashboard
+│   │   ├── 📄 page.tsx              // Admin dashboard for managing guests and events
+│   │   ├── 📂 components
+│   │   │   ├── 📄 ManageGuests.tsx  // Manage guest list, add, delete, edit
+│   │   │   ├── 📄 EventDetails.tsx  // Form for managing event details (date, location, etc.)
+│   │   │   └── 📄 ImportButton.tsx  // Import XLS button for guest list
+│   │
+│   └── 📂 api                       // API Routes
+│       ├── 📂 guests
+│       │   ├── 📄 route.ts          // API route for CRUD operations on guests
+│       └── 📂 attendance
+│           ├── 📄 route.ts          // API route to update attendance
+│
+├── 📂 components                    // Shared Components
+│   ├── 📄 Navbar.tsx                // Navbar with links to pages based on user roles
+│   ├── 📄 QRCodeScanner.tsx         // QR code scanner component
+│   ├── 📄 Notification.tsx          // Notification system
+│   └── 📄 RoleBasedAccess.tsx       // Controls access based on user roles
+│
+├── 📂 prisma
+│   ├── 📄 schema.prisma             // Database schema for Prisma
+│
+├── 📄 .env                          // Environment variables
+├── 📄 todolist.md                   // Project To-Do list (for tracking tasks)
+└── 📄 README.md                     // Project documentation
