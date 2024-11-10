@@ -2,8 +2,8 @@
 
 ## Project Setup
 
--   [ ] Set up Next.js project and dependencies
--   [ ] Install Prisma and configure database
+-   [ V ] Set up Next.js project and dependencies
+-   [ V  ] Install Prisma and configure database
 -   [ ] Set up authentication
 
 ## Pages and Components

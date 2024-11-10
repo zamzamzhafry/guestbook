@@ -1,0 +1,34 @@
+#### Table_Guests
+UUID
+Name
+Email
+NoWhatsapp
+Kode
+Status
+Jml
+Date_Modified
+Date_Added
+IsDeleted
+
+#### Table_Wedding
+UUID
+BrideName
+GroomName
+Date_Wedding
+Location
+Link_Maps
+Link_Streaming
+Link_Website
+GroomParent
+BrideParent
+Hastag
+Bride_Social
+Bride_SocialURL
+Groom_Social
+GroomURL
+
+### Table_Wishes
+UUID
+Name
+Wish
+Donate
