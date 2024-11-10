@@ -29,8 +29,8 @@
 
 -   [ ] **QR Code Generator and Scan** (`/attendance/qr-generator`)
 
-    -   [ ] QR code generator with options for encoding invitation details
-    -   [ ] QR code scanner (use a library like `react-qr-reader`) to scan codes and mark attendance
+    -   [ HALF ] QR code generator with options for encoding invitation details
+    -   [ V ] QR code scanner (use a library like `react-qr-reader`) to scan codes and mark attendance
 
 -   [ ] **Front Desk** (`/attendance/check-in`)
     -   [ ] Front desk (or keeper) page to confirm attendance status
