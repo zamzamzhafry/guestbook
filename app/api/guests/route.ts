@@ -11,7 +11,7 @@ export async function POST(request: Request) {
                 email: data.email,
                 whatsapp: data.whatsapp,
                 code: data.code,
-                status: 'Pending', // Default status
+                status: data.status ?? 1, // Default status
                 guestCount: data.guestCount ?? 1,
             },
         })

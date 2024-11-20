@@ -32,7 +32,7 @@ model Guest {
   email         String   @unique @map("Email")
   whatsapp      String   @map("NoWhatsapp")
   code          String   @map("Kode")
-  status        String   @map("Status")
+  status        Int      @default(0) // 0: Unconfirmed, 1: Will Attend, 2: Has Attended, 3: Not Attending
   guestCount    Int      @map("Jml")
   dateModified  DateTime @updatedAt @map("Date_Modified")
   dateAdded     DateTime @default(now()) @map("Date_Added")
