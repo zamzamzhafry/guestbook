@@ -10,7 +10,7 @@ export async function POST(request: Request) {
                 name: data.name,
                 email: data.email,
                 whatsapp: data.whatsapp,
-                code: data.code,
+                code: data.code ?? '',
                 status: data.status ?? 1, // Default status
                 guestCount: data.guestCount ?? 1,
             },

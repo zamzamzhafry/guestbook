@@ -53,20 +53,57 @@ const AddGuestModal = ({ onAddGuest }: { onAddGuest: (data: any) => void }) => {
         resolver: zodResolver(guestSchema),
     })
 
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
         const generatedCode = uniqueCode || handleGenerateCode()
-        onAddGuest({ ...data, uniqueCode: generatedCode })
-        reset()
-        setUniqueCode(null)
-        setIsOpen(false)
-        console.log(
-            'Form submitted:',
-            data.name,
-            data.email,
-            data.whatsapp,
-            data.uniqueCode,
-            data.guestCount
-        )
+        try {
+            try {
+                console.log('Submitting data:', data) // Debugging input data
+
+                const response = await fetch('/api/guests/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: data.name,
+                        email: data.email,
+                        whatsapp: data.whatsapp,
+                        code: generatedCode ?? '',
+                        status: data.status ?? 1,
+                        guestCount: data.guestCount ?? 1,
+                    }),
+                })
+
+                if (!response.ok) {
+                    const errorData = await response.json()
+                    console.error('API Response Error:', errorData) // Log the response error
+                    throw new Error(
+                        errorData.message || 'An unknown error occurred.'
+                    )
+                }
+
+                const result = await response.json()
+                console.log('Guest added successfully:', result)
+
+                // Call your onAddGuest function with the new guest data
+                onAddGuest(result)
+
+                // Clear form
+                reset()
+                setUniqueCode(null)
+                setIsOpen(false)
+            } catch (error: any) {
+                console.error(
+                    'Error occurred during guest creation:',
+                    error.message
+                )
+            }
+        } catch (error: any) {
+            console.error(
+                'Error occurred during guest creation:',
+                error.message
+            )
+        }
     }
 
     const handleGenerateCode = () => {
@@ -179,7 +216,9 @@ const AddGuestModal = ({ onAddGuest }: { onAddGuest: (data: any) => void }) => {
 
                         {/* Footer */}
                         <DialogFooter>
-                            <Button type="submit">Save</Button>
+                            <Button type="submit" onClick={onSubmit}>
+                                Save
+                            </Button>
                             <Button
                                 variant="secondary"
                                 type="button"

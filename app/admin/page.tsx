@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/table'
 import AddGuestButton from './components/AddGuestButton'
 
+// import { AddGuestDialog } from './components/AddGuestDialog'
 const GuestStatus = {
     0: { text: 'Unconfirmed', color: 'bg-yellow-100 text-yellow-700' },
     1: { text: 'Will Attend', color: 'bg-blue-100 text-blue-700' },
@@ -37,6 +38,7 @@ export default async function AdminPage() {
                     </h1>
                     <div className="flex items-center space-x-2">
                         <AddGuestButton />
+                        {/* <AddGuestDialog /> */}
 
                         <Button
                             variant="secondary"

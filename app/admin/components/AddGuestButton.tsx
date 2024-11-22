@@ -1,6 +1,7 @@
 'use client'
 import React from 'react'
 import AddGuestModal from './AddGuestModal'
+import AddGuestDialog from './AddGuestDialog'
 import { useState } from 'react'
 
 export default function AddGuestButton() {
@@ -12,6 +13,7 @@ export default function AddGuestButton() {
 
     return (
         <>
+            <AddGuestDialog />
             <button
                 onClick={handleOpenModal}
                 className="px-5 py-2 text-sm font-medium rounded-md"

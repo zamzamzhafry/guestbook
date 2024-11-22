@@ -1,55 +1,57 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
 generator client {
   provider = "prisma-client-js"
 }
 
-model Wedding {
-  id               String   @id @default(uuid()) @map("UUID")
-  brideName        String   @map("BrideName")
-  groomName        String   @map("GroomName")
-  date             DateTime @map("Date_Wedding")
-  location         String   @map("Location")
-  mapsLink         String   @map("Link_Maps")
-  streamingLink    String   @map("Link_Streaming")
-  websiteLink      String   @map("Link_Website")
-  groomParent      String   @map("GroomParent")
-  brideParent      String   @map("BrideParent")
-  hashtag          String   @map("Hastag")
-  brideSocial      String   @map("Bride_Social")
-  brideSocialURL   String   @map("Bride_SocialURL")
-  groomSocial      String   @map("Groom_Social")
-  groomSocialURL   String   @map("Groom_SocialURL")
+// ngentod ga isa write record padahal wingi isa
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
 
-  guests           Guest[]  // One-to-many relationship: one wedding has multiple guests
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Wedding {
+  id             String   @id @default(uuid()) @map("UUID")
+  brideName      String   @map("BrideName")
+  groomName      String   @map("GroomName")
+  date           DateTime @map("Date_Wedding")
+  location       String   @map("Location")
+  mapsLink       String   @map("Link_Maps")
+  streamingLink  String   @map("Link_Streaming")
+  websiteLink    String   @map("Link_Website")
+  groomParent    String   @map("GroomParent")
+  brideParent    String   @map("BrideParent")
+  hashtag        String   @map("Hastag")
+  brideSocial    String   @map("Bride_Social")
+  brideSocialURL String   @map("Bride_SocialURL")
+  groomSocial    String   @map("Groom_Social")
+  groomSocialURL String   @map("Groom_SocialURL")
+  guests         Guest[]
 }
 
 model Guest {
-  id            String   @id @default(uuid()) @map("UUID")
-  name          String   @map("Name")
-  email         String   @unique @map("Email")
-  whatsapp      String   @map("NoWhatsapp")
-  code          String   @map("Kode")
-  status        Int      @default(0) // 0: Unconfirmed, 1: Will Attend, 2: Has Attended, 3: Not Attending
-  guestCount    Int      @map("Jml")
-  dateModified  DateTime @updatedAt @map("Date_Modified")
-  dateAdded     DateTime @default(now()) @map("Date_Added")
-  isDeleted     Boolean  @default(false) @map("IsDeleted")
-
-  // Foreign key for the Wedding relation
-  weddingId     String?  @map("WeddingId")
-  wedding       Wedding? @relation(fields: [weddingId], references: [id])
-
-  // One-to-one relationship with Wish
-  wish          Wish?
+  id           String   @id @default(uuid()) @map("UUID")
+  name         String   @map("Name")
+  email        String   @unique @map("Email")
+  whatsapp     String   @map("NoWhatsapp")
+  code         String   @map("Kode")
+  guestCount   Int      @map("Jml")
+  dateModified DateTime @updatedAt @map("Date_Modified")
+  dateAdded    DateTime @default(now()) @map("Date_Added")
+  isDeleted    Boolean  @default(false) @map("IsDeleted")
+  weddingId    String?  @map("WeddingId")
+  status       Int      @default(0)
+  wedding      Wedding? @relation(fields: [weddingId], references: [id])
+  wish         Wish?
 }
 
 model Wish {
-  id            String   @id @default(uuid()) @map("UUID")
-  guestId       String   @unique @map("GuestId")
-  guest         Guest    @relation(fields: [guestId], references: [id])
-  message       String   @map("Wish")
-  donation      Float?   @map("Donate")
+  id       String @id @default(uuid()) @map("UUID")
+  guestId  String @unique @map("GuestId")
+  message  String @map("Wish")
+  donation Float? @map("Donate")
+  guest    Guest  @relation(fields: [guestId], references: [id])
 }
