@@ -1,6 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+// import router from 'next/router'
+
+// import { PrismaClient, Prisma } from '@prisma/client'
+// const prisma = new PrismaClient()
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -24,29 +28,65 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
+import { Router } from 'next/router'
 
-// import { useState } from 'react'
+// In your component file (e.g., RegistrationForm.tsx)
+const registerUser = async (values: z.infer<typeof formSchema>) => {
+    try {
+        const response = await fetch('/api/guests/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(values),
+        })
 
-const registerUser = (userInfo: {
-    name: string
-    email: string
-    password: string
-}) => {
-    const usersFromStore: { name: string; email: string; password: string }[] =
-        JSON.parse(window.localStorage.getItem('users') ?? '[]') || []
-    const newUser = {
-        name: userInfo.name,
-        email: userInfo.email,
-        password: userInfo.password,
+        if (response.ok) {
+            const result = await response.json()
+            console.log('Guest registered:', result)
+        } else {
+            console.error('Error registering guest')
+        }
+    } catch (error) {
+        console.error('Error during submission:', error)
     }
-    usersFromStore.push(newUser)
-    window.localStorage.setItem('users', JSON.stringify(usersFromStore))
 }
 
-// const passwordValidation = new RegExp(
-//     /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
-// )
+// const registerUser = async (
+//     data: z.infer<typeof formSchema>
+// ): Promise<void> => {
+//     console.log('Request Body:', data)
 
+//     try {
+//         const response = await fetch(
+//             // '/api/guests/register',
+//             'http://localhost:3000/guests/register',
+//             {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify(data),
+//             }
+//             // console.log(data)
+//         )
+
+//         if (!response.ok) {
+//             const errorText = await response.text()
+//             throw new Error(
+//                 errorText || 'Failed to register guest: unknown error'
+//             )
+//         }
+
+//         const result = await response.json()
+
+//         console.log('Guest registered successfully:', result)
+//     } catch (error) {
+//         console.error('Error during guest registration:', error)
+//     }
+// }
+
+// zod schema
 const formSchema = z.object({
     name: z.string().min(3, {
         message: 'Name must be at least 3 characters.',
@@ -54,27 +94,22 @@ const formSchema = z.object({
     email: z
         .string()
         .min(1, {
-            message: 'You mus give an email address.',
+            message: 'You must give an email address.',
         })
         .email('This is not a valid email.'),
     whatsapp: z
         .string()
-        .min(8, {})
-        .refine(
-            (value) => {
-                const phoneRegex =
-                    /^(\+\d{1,2}\s?)?1?\-?\s?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}$/
-                return phoneRegex.test(value)
-            },
-            {
-                message: 'This is not a valid phone number.',
-            }
-        ),
+        .regex(/^[0-9]+$/, 'Whatsapp number must contain only digits')
+        .min(10, 'Whatsapp number must be at least 10 digits long')
+        .max(15, 'Whatsapp number cannot exceed 15 digits'),
+    //
     uniqueCode: z.string().min(1, {
         message: 'You must give a unique code.',
     }),
     status: z.number(),
-    guestCount: z.number(),
+    guestCount: z.number().max(10, {
+        message: 'Guest count must be less than 10',
+    }),
     // password: z
     //     .string()
     //     .min(1, {
@@ -84,46 +119,45 @@ const formSchema = z.object({
     //         message: 'Your password is not valid',
     //     }),
 })
-export function RegistrationForm({ onSave }) {
-    // const [uniqueCode, setUniqueCode] = useState<string | null>(null)
-
-    const handleGenerateCode = () => {
-        // const newCode = Array.from({ length: 8 }, () =>
-        //     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.charAt(
-        //         Math.floor(Math.random() * 62)
-        //     )
-        // ).join('')
-        // setValue('uniqueCode', newCode)
-        // setUniqueCode(newCode)
-        // return newCode
-        return 'Unik123'
-    }
-
+export function RegistrationForm({ onSave }: { onSave: () => void }) {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: '',
             email: '',
-            // password: '',
             whatsapp: '',
-            uniqueCode: handleGenerateCode() ?? '',
+            uniqueCode: generateUniqueCode(),
             status: 1,
             guestCount: 1,
         },
     })
 
-    // 2. Define a submit handler.
-    async function onSubmit(values) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
-        registerUser(values)
-        onSave()
+    // Generates a unique code
+    function generateUniqueCode() {
+        return Array.from({ length: 8 }, () =>
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.charAt(
+                Math.floor(Math.random() * 62)
+            )
+        ).join('')
+    }
+
+    // Handles the form submission
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+            console.log('Form values:', values) // Debugging output
+            await registerUser(values) // Ensure the user is registered before refreshing
+            onSave() // Refresh or update the admin page after successful registration
+            console.log('Guest successfully registered')
+            // Router.refresh()
+        } catch (error) {
+            console.error('Error registering user:', error) // Log the error
+        }
     }
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                {/* Name Field */}
                 <FormField
                     control={form.control}
                     name="name"
@@ -132,17 +166,16 @@ export function RegistrationForm({ onSave }) {
                             <FormLabel>Your Name</FormLabel>
                             <FormControl>
                                 <Input
-                                    placeholder="Specify a Name"
+                                    placeholder="Enter your name"
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>
-                                Give Your Full Name
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+
+                {/* Email Field */}
                 <FormField
                     control={form.control}
                     name="email"
@@ -152,72 +185,61 @@ export function RegistrationForm({ onSave }) {
                             <FormControl>
                                 <Input
                                     type="email"
-                                    placeholder="Specify an Email"
+                                    placeholder="Enter your email"
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>
-                                Give a Valid Email Address
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+
+                {/* WhatsApp Field */}
                 <FormField
                     control={form.control}
                     name="whatsapp"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>WhatsApp Number</FormLabel>
                             <FormControl>
-                                <Input
-                                    type="number"
-                                    placeholder="Specify a Password"
-                                    {...field}
-                                />
+                                <Input placeholder="081234567890" {...field} />
                             </FormControl>
-                            <FormDescription>
-                                A password must be with Minimum 8 characters, at
-                                least one uppercase letter, one lowercase
-                                letter, one number and one special character.
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+
+                {/* Unique Code Field */}
                 <FormField
                     control={form.control}
                     name="uniqueCode"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Kode Tamu</FormLabel>
+                            <FormLabel>Guest Code</FormLabel>
                             <FormControl>
-                                <Input
-                                    type="text"
-                                    placeholder="Cetak Kode Tamu"
-                                    {...field}
-                                />
+                                <Input {...field} disabled readOnly />
                             </FormControl>
-                            <FormDescription>
-                                Cetak Kode Tamu dengan Klik
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+
+                {/* Status Field */}
                 <FormField
                     control={form.control}
                     name="status"
                     render={({ field: { onChange, value } }) => (
                         <FormItem>
-                            <FormLabel>Status Kehadiran</FormLabel>
+                            <FormLabel>Attendance Status</FormLabel>
                             <FormControl>
                                 <Select
-                                    onValueChange={(val) => onChange(val)}
+                                    onValueChange={(val) =>
+                                        onChange(parseInt(val, 10))
+                                    }
                                     value={value.toString()}
                                 >
                                     <SelectTrigger className="w-[180px]">
-                                        <SelectValue placeholder="Pilih Kehadiran" />
+                                        <SelectValue placeholder="Select status" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
@@ -238,13 +260,40 @@ export function RegistrationForm({ onSave }) {
                                     </SelectContent>
                                 </Select>
                             </FormControl>
-                            <FormDescription>
-                                Pilih Status Kehadiran
-                            </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+
+                <FormField
+                    control={form.control}
+                    name="guestCount"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Number of Guests</FormLabel>
+                            <FormControl>
+                                <Input
+                                    type="number"
+                                    placeholder="Enter the number of guests"
+                                    value={field.value?.toString() || ''} // Ensure the value is a string for the Input component
+                                    onChange={
+                                        (e) =>
+                                            field.onChange(
+                                                e.target.value
+                                                    ? parseInt(
+                                                          e.target.value,
+                                                          10
+                                                      )
+                                                    : 0
+                                            ) // Convert input to a number
+                                    }
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
                 <Button type="submit">Submit</Button>
             </form>
         </Form>

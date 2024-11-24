@@ -1,9 +1,9 @@
 import {
     Dialog,
-    DialogClose,
+    // DialogClose,
     DialogContent,
     DialogDescription,
-    DialogFooter,
+    // DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -16,12 +16,23 @@ import { Button } from '@/components/ui/button'
 import React from 'react'
 import { RegistrationForm } from './Register/RegistrationForm'
 
-export function AddGuestDialog() {
+export function AddGuestDialog({
+    open,
+    setOpen,
+}: {
+    open: boolean
+    setOpen: (open: boolean) => void
+}) {
+    // const [open, setOpen] = React.useState(false)
+
+    const handleCloseDialog = () => {
+        setOpen(false)
+    }
     return (
-        <Dialog>
-            <DialogTrigger asChild>
+        <Dialog open={open} onOpenChange={setOpen}>
+            {/* <DialogTrigger asChild>
                 <Button variant="outline">Tambah Tamu</Button>
-            </DialogTrigger>
+            </DialogTrigger> */}
             <DialogContent className="sm:max-w-md">
                 <DialogHeader>
                     <DialogTitle>Tambah Tamu</DialogTitle>
@@ -30,7 +41,7 @@ export function AddGuestDialog() {
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex items-center space-x-2">
-                    <RegistrationForm onSave={() => {}} />
+                    <RegistrationForm onSave={handleCloseDialog} />
                 </div>
             </DialogContent>
         </Dialog>
