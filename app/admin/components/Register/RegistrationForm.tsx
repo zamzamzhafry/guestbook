@@ -12,7 +12,7 @@ import { Input } from '@/components/ui/input'
 import {
     Form,
     FormControl,
-    FormDescription,
+    // FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -28,7 +28,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-import { Router } from 'next/router'
+// import { Router } from 'next/router'
 
 // In your component file (e.g., RegistrationForm.tsx)
 const registerUser = async (values: z.infer<typeof formSchema>) => {
@@ -51,40 +51,6 @@ const registerUser = async (values: z.infer<typeof formSchema>) => {
         console.error('Error during submission:', error)
     }
 }
-
-// const registerUser = async (
-//     data: z.infer<typeof formSchema>
-// ): Promise<void> => {
-//     console.log('Request Body:', data)
-
-//     try {
-//         const response = await fetch(
-//             // '/api/guests/register',
-//             'http://localhost:3000/guests/register',
-//             {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify(data),
-//             }
-//             // console.log(data)
-//         )
-
-//         if (!response.ok) {
-//             const errorText = await response.text()
-//             throw new Error(
-//                 errorText || 'Failed to register guest: unknown error'
-//             )
-//         }
-
-//         const result = await response.json()
-
-//         console.log('Guest registered successfully:', result)
-//     } catch (error) {
-//         console.error('Error during guest registration:', error)
-//     }
-// }
 
 // zod schema
 const formSchema = z.object({

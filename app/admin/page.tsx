@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/table'
 import AddGuestButton from './components/AddGuestButton'
 import GuestStatusBadge from './components/Details/GuestStatusBadge'
+import GuestDetails from './components/Details/GuestDetails'
 
 // import { AddGuestDialog } from './components/AddGuestDialog'
 
@@ -39,7 +40,14 @@ export default async function AdminPage() {
                             variant="secondary"
                             className="px-5 py-2 text-sm font-medium rounded-md"
                         >
-                            Import Guest
+                            Import Guest (Excels)
+                        </Button>
+
+                        <Button
+                            variant="destructive"
+                            className="px-5 py-2 text-sm font-medium rounded-md"
+                        >
+                            Format Udangan
                         </Button>
                     </div>
                 </div>
@@ -73,11 +81,22 @@ export default async function AdminPage() {
                                         <TableCell className="text-center">
                                             <Button
                                                 className="mr-2"
+                                                variant="secondary"
+                                                size="sm"
+                                            >
+                                                Undang
+                                            </Button>
+                                            <GuestDetails
+                                                // onShowDetails={}
+                                                guest={guest}
+                                            />
+                                            {/* <Button
+                                                className="mr-2"
                                                 variant="default"
                                                 size="sm"
                                             >
                                                 Detail
-                                            </Button>
+                                            </Button> */}
                                             <Button
                                                 className="mr-2"
                                                 variant="default"

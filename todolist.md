@@ -16,7 +16,7 @@
 
 -   [ ] **Guest Dashboard** (`/dashboard`)
 
-    -   [ ] Input fields for adding guests manually
+    -   [ V ] Input fields for adding guests manually
     -   [ ] Import guest list via XLS format (e.g., using `read-excel-file` or `SheetJS`)
     -   [ ] Display guest list with actions like edit, delete, or confirm attendance
     -   [ ] Show links to generated invitations for each guest

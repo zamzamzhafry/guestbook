@@ -1,7 +1,7 @@
 import React from 'react'
 
 const GuestStatusBadge: React.FC<{ status: number }> = ({ status }) => {
-    const GuestStatus = {
+    const GuestStatus: { [key: number]: { text: string; color: string } } = {
         0: { text: 'Belum Konfirmasi', color: 'bg-yellow-100 text-yellow-700' },
         1: { text: 'Akan Hadir', color: 'bg-blue-100 text-blue-700' },
         2: { text: 'Telah Hadir', color: 'bg-green-100 text-green-700' },
