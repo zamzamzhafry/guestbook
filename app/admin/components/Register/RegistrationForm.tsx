@@ -1,10 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-// import router from 'next/router'
 
-// import { PrismaClient, Prisma } from '@prisma/client'
-// const prisma = new PrismaClient()
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'

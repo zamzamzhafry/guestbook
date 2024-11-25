@@ -14,6 +14,7 @@ import {
 import AddGuestButton from './components/AddGuestButton'
 import GuestStatusBadge from './components/Details/GuestStatusBadge'
 import GuestDetails from './components/Details/GuestDetails'
+import { DeleteGuestDialog } from './components/Delete/DeleteGuestDialog'
 
 // import { AddGuestDialog } from './components/AddGuestDialog'
 
@@ -79,37 +80,24 @@ export default async function AdminPage() {
                                             />
                                         </TableCell>
                                         <TableCell className="text-center">
-                                            <Button
-                                                className="mr-2"
-                                                variant="secondary"
-                                                size="sm"
-                                            >
-                                                Undang
-                                            </Button>
-                                            <GuestDetails
-                                                // onShowDetails={}
-                                                guest={guest}
-                                            />
-                                            {/* <Button
-                                                className="mr-2"
-                                                variant="default"
-                                                size="sm"
-                                            >
-                                                Detail
-                                            </Button> */}
-                                            <Button
-                                                className="mr-2"
-                                                variant="default"
-                                                size="sm"
-                                            >
-                                                Edit
-                                            </Button>
-                                            <Button
-                                                variant="destructive"
-                                                size="sm"
-                                            >
-                                                Delete
-                                            </Button>
+                                            <div className="flex space-x-2 mt-2">
+                                                <GuestDetails
+                                                    // onShowDetails={}
+                                                    guest={guest}
+                                                />
+                                            </div>
+                                            <div className="flex space-x-2 mt-2">
+                                                <Button
+                                                    className="mr-2"
+                                                    variant="default"
+                                                    size="sm"
+                                                >
+                                                    Edit
+                                                </Button>
+                                                <DeleteGuestDialog
+                                                    guest={guest}
+                                                />
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 ))

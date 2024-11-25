@@ -5,35 +5,54 @@ import {
     DialogContent,
     DialogHeader,
     DialogTrigger,
+    DialogTitle,
+    // DialogFooter,
+    DialogClose,
 } from '@/components/ui/dialog'
 
+interface Guest {
+    name: string
+    email: string
+    whatsapp: string
+    guestCount: number
+}
 const GuestDetails = ({
-    guest,
+    guest: Guest,
     // onShowDetails
 }) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button
-                    type="button"
-                    className="text-sm font-medium"
-                    // onClick={onShowDetails}
-                >
-                    Details
-                </Button>
+                <div>
+                    <Button
+                        type="button"
+                        className="text-sm font-medium"
+                        // onClick={onShowDetails}
+                    >
+                        Details
+                    </Button>
+                </div>
             </DialogTrigger>
             <DialogContent className="max-w-md">
                 <DialogHeader>
-                    <h1 className="text-lg font-bold">{guest.name}</h1>
+                    <DialogTitle>Detail Tamu</DialogTitle>
                 </DialogHeader>
                 <div className="mt-4">
-                    <p>Email: {guest.email}</p>
-                    <p>Whatsapp: {guest.whatsapp}</p>
-                    <p>Guest Count: {guest.guestCount}</p>
+                    <p>Address: {Guest.name}</p>
+
+                    <p>Email: {Guest.email}</p>
+                    <p>Whatsapp: {Guest.whatsapp}</p>
+                    <p>Guest Count: {Guest.guestCount}</p>
                 </div>
+                <DialogClose asChild>
+                    <Button type="button" variant="secondary">
+                        Close
+                    </Button>
+                </DialogClose>
             </DialogContent>
         </Dialog>
     )
 }
 
 export default GuestDetails
+
