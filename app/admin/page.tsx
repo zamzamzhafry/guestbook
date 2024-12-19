@@ -15,6 +15,7 @@ import AddGuestButton from './components/AddGuestButton'
 import GuestStatusBadge from './components/Details/GuestStatusBadge'
 import GuestDetails from './components/Details/GuestDetails'
 import { DeleteGuestDialog } from './components/Delete/DeleteGuestDialog'
+import EditGuestButton from './components/EditGuestButton'
 
 // import { AddGuestDialog } from './components/AddGuestDialog'
 
@@ -87,13 +88,17 @@ export default async function AdminPage() {
                                                 />
                                             </div>
                                             <div className="flex space-x-2 mt-2">
-                                                <Button
+                                                <EditGuestButton />
+                                                {/* <Button
                                                     className="mr-2"
                                                     variant="default"
                                                     size="sm"
+                                                    onClick={() =>
+                                                        console.log(guest)
+                                                    }
                                                 >
                                                     Edit
-                                                </Button>
+                                                </Button> */}
                                                 <DeleteGuestDialog
                                                     guest={guest}
                                                 />

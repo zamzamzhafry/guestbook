@@ -9,13 +9,13 @@ import {
     // DialogFooter,
     DialogClose,
 } from '@/components/ui/dialog'
-
 interface Guest {
     name: string
     email: string
     whatsapp: string
     guestCount: number
 }
+
 const GuestDetails = ({
     guest: Guest,
     // onShowDetails
@@ -55,4 +55,3 @@ const GuestDetails = ({
 }
 
 export default GuestDetails
-

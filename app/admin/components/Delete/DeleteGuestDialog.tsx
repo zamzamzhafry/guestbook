@@ -3,6 +3,29 @@
 import { Guest } from '@prisma/client'
 // import prisma from '@/lib/prisma'
 
+interface DeleteGuestDialogProps {
+    guest: {
+        id: string
+        name: string
+        email: string
+        whatsapp: string
+        code: string
+        guestCount: number
+        dateModified: Date
+        dateAdded: Date
+        isDeleted: boolean
+        weddingId: string | null
+        status: number
+    }
+    onDelete: (guestId: string) => void // Function triggered on delete
+    isOpen: boolean // Dialog open/close state
+    setIsOpen: (isOpen: boolean) => void // Function to set dialog state
+    // onDelete: (guest: Guest) => void
+    // isOpen: boolean
+    // setIsOpen: (isOpen: boolean) => void
+    // guest: Guest
+}
+
 import {
     Dialog,
     DialogClose,
@@ -13,19 +36,12 @@ import {
     DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-
-export interface DeleteGuestDialogProps {
-    onDelete: (guest: Guest) => void
-    isOpen: boolean
-    setIsOpen: (isOpen: boolean) => void
-    guest: Guest
-}
-
 export function DeleteGuestDialog({
+    // onDelete,
+    guest,
     onDelete,
     isOpen,
     setIsOpen,
-    guest,
 }: DeleteGuestDialogProps) {
     const handleDelete = async () => {
         console.log('Deleting guest with ID:', guest.id)

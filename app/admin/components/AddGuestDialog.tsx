@@ -40,7 +40,7 @@ export function AddGuestDialog({
                         Tambahkan Calon Tamu yang akan Hadir
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 overflow-hidden">
                     <RegistrationForm onSave={handleCloseDialog} />
                 </div>
             </DialogContent>
